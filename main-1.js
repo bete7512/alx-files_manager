@@ -19,6 +19,7 @@ const waitConnection = () => new Promise((resolve, reject) => {
 });
 
 (async () => {
+  console.log(dbClient.isAlive());
   await waitConnection();
   console.log(dbClient.isAlive());
   console.log(await dbClient.nbUsers());
