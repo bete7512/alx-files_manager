@@ -10,8 +10,8 @@ dotenv.config();
 
 class DBClient {
   constructor() {
-    this._uri = 'mongodb://root:root@localhost:27017';
-    this._databaseName = 'files_manager';
+    this._uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`;
+    this._databaseName = process.env.DB_NAME;
     this.isConnected = false;
     MongoClient.connect(this._uri, {
       useNewUrlParser: true,
