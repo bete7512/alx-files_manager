@@ -1,47 +1,65 @@
+/* eslint-disable consistent-return */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-return-await */
 // eslint-disable-next-line no-unused-vars
-import { MongoClient } from 'mongodb';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// import MongoClient from 'mongodb';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+import Mongo from 'mongodb';
+
 class DBClient {
   constructor() {
-    this._db = null;
-  }
+    this._uri = 'mongodb://root:root@localhost:27017';
+    this._databaseName = 'admin';
+    MongoClient.connect(
+      this._uri,
+      { useNewUrlParser: true },
+      (error, client) => {
+        if (error) {
+          return console.log('Connection failed for some reason');
+        }
+        console.log('Connection established - All well');
+        this.db = client.db(this._databaseName);
+      },
+    );
 
-  async connect() {
-    if (this._db) {
-      return this._db;
-    }
-
-    const client = new MongoClient(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    await client.connect();
-    this._db = client.db(process.env.MONGO_DB_NAME);
-    // check client is connected or not
-    console.log('am from there',client.isConnected());
-
-    return this._db;
+    // this.db = null;
+    // this.client = new MongoClient('mongodb://root:root@localhost:27017', {
+    //   useNewUrlParser: true,
+    //   useUnifiedTopology: true,
+    // });
+    // this.client.connect((err, res) => {
+    //   if (err) {
+    //     console.log('error', err);
+    //   }
+    //   this.db = res.db('admin');
+    // });
   }
 
   isAlive() {
-    return this._db !== null;
+    return this.client.isConnected();
   }
 
   async nbUsers() {
-    // eslint-disable-next-line no-return-await
-    return await this._db.collection('users').countDocuments();
+    console.log(
+      await this.db
+        .collection('users')
+        .findOne({ email: 'betekbebe@gmail.com' }),
+    );
+    return await this.db.collection('users').countDocuments();
   }
 
   async nbFiles() {
-    // eslint-disable-next-line no-return-await
-    return await this._db.collection('files').countDocuments();
+    console.log(await this.db.collection('files').countDocuments());
+    return await this.db.collection('files').countDocuments();
   }
 }
 
 const dbClient = new DBClient();
-module.exports = dbClient;
+// (async () => console.log(
+//   await dbClient.db.collection('users').findOne({ email: 'betekbebe@gmail.com' }),
+// ))();
+
+export default dbClient;

@@ -1,20 +1,12 @@
-/* eslint-disable quotes */
-import redis from "redis";
+import redis from 'redis';
 
-// const client = redis.createClient();
-
-// client.on("connect", () => {
-//   console.log("Redis client connected");
-// });
 class RedisClient {
   constructor() {
     this.client = redis.createClient();
   }
 
   isAlive() {
-    
-   
-    return this.client.connected;
+    return this.client.ready && this.client.connected;
   }
 
   get(key) {
