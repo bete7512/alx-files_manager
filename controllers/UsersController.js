@@ -3,7 +3,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import shal from 'sha1';
+import { ObjectId } from 'mongodb';
 import dbClient from '../utils/db.js';
+import redisClient from '../utils/redis.js';
 
 const UsersController = {
   async postNew(req, res) {

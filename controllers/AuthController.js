@@ -31,16 +31,16 @@ const AuthController = {
     return res.status(200).json({ token });
   },
   getDisconnect: async (req, res) => {
-    const token = req.headers.authorization;
+    const token = req.headers['x-token'];
+    console.log(token);
     if (!token) {
+      console.log('no header');
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    const [authType, authValue] = token.split(' ');
-    if (authType !== 'X-Token') {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
+
     const userId = await redisClient.get(`auth_${token}`);
     if (!userId) {
+      console.log('no user');
       return res.status(401).json({ error: 'Unauthorized' });
     }
     await redisClient.del(`auth_${token}`);
