@@ -11,7 +11,7 @@ dotenv.config();
 class DBClient {
   constructor() {
     this._uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`;
-    this._databaseName = process.env.DB_NAME;
+    this._databaseName = process.env.DB_DATABASE;
     this.isConnected = false;
     MongoClient.connect(this._uri, {
       useNewUrlParser: true,

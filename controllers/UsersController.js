@@ -22,7 +22,7 @@ const UsersController = {
         email,
         password: hashedPassword,
       });
-
+      console.log(user);
       //   console.log(user);
       //   console.log(user.ops[0]._id, user.ops[0].email);
       return res.status(201).json({
