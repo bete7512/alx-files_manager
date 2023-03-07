@@ -1,53 +1,40 @@
-/* eslint-disable import/extensions */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
-import shal from 'sha1';
-import { ObjectId } from 'mongodb';
-import dbClient from '../utils/db.js';
-import redisClient from '../utils/redis.js';
+/* eslint-disable import/no-named-as-default */
+import sha1 from 'sha1';
+import Queue from 'bull/lib/queue';
+import dbClient from '../utils/db';
 
-const UsersController = {
-  async postNew(req, res) {
-    const email = req.body.email ? req.body.email : null;
-    const password = req.body.password ? req.body.password : null;
+const userQueue = new Queue('email sending');
 
-    if (!email) { return res.status(400).json({ error: 'Missing email' }); }
-    if (!password) { return res.status(400).json({ error: 'Missing password' }); }
-    const userExists = await dbClient.db.collection('users').findOne({ email });
-    if (userExists) { return res.status(400).json({ error: 'Already exist' }); }
+export default class UsersController {
+  static async postNew(req, res) {
+    const email = req.body ? req.body.email : null;
+    const password = req.body ? req.body.password : null;
 
-    const hashedPassword = await shal(password);
-
-    try {
-      const user = await dbClient.db.collection('users').insertOne({
-        email,
-        password: hashedPassword,
-      });
-      console.log(user);
-      //   console.log(user);
-      //   console.log(user.ops[0]._id, user.ops[0].email);
-      return res.status(201).json({
-        id: user.ops[0]._id,
-        email: user.ops[0].email,
-      });
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal error' });
+    if (!email) {
+      res.status(400).json({ error: 'Missing email' });
+      return;
     }
-  },
-  async getMe(req, res) {
-    const token = req.headers['x-token'];
-    if (!token) { return res.status(401).json({ error: 'Unauthorized' }); }
-    const userId = await redisClient.get(`auth_${token}`);
-    if (!userId) { return res.status(401).json({ error: 'Unauthorized' }); }
-    const user = await dbClient.db.collection('users').findOne({ _id: new ObjectId(userId) });
-    if (!user) { return res.status(401).json({ error: 'Unauthorized' }); }
-    console.log(user);
-    return res.status(200).json({
-      id: user._id,
-      email: user.email,
-    });
-  },
-};
+    if (!password) {
+      res.status(400).json({ error: 'Missing password' });
+      return;
+    }
+    const user = await (await dbClient.usersCollection()).findOne({ email });
 
-export default UsersController;
+    if (user) {
+      res.status(400).json({ error: 'Already exist' });
+      return;
+    }
+    const insertionInfo = await (await dbClient.usersCollection())
+      .insertOne({ email, password: sha1(password) });
+    const userId = insertionInfo.insertedId.toString();
+
+    userQueue.add({ userId });
+    res.status(201).json({ email, id: userId });
+  }
+
+  static async getMe(req, res) {
+    const { user } = req;
+
+    res.status(200).json({ email: user.email, id: user._id.toString() });
+  }
+}
