@@ -10,6 +10,7 @@ const AppController = {
   },
   async getStats(req, res) {
     const users = await dbClient.nbUsers();
+    // sk
     const files = await dbClient.nbFiles();
     res.status(200).send({ users, files });
   },
