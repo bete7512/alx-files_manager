@@ -4,9 +4,9 @@
 /* eslint-disable no-return-await */
 
 import { MongoClient } from 'mongodb';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 
 class DBClient {
   constructor() {
@@ -15,16 +15,13 @@ class DBClient {
     this._uri = `mongodb://${this._host}:${this._port}`;
     this.db = null;
     this._databaseName = process.env.DB_DATABASE || 'files_manager';
-    this.isConnected = false;
     MongoClient.connect(this._uri, {
-      useNewUrlParser: true,
       useUnifiedTopology: true,
     })
       .then((client) => {
         this.db = client.db(this._databaseName);
         if (!this.db.collection('users')) this.db.createCollection('users');
         if (!this.db.collection('files')) this.db.createCollection('files');
-        this.isConnected = true;
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +29,7 @@ class DBClient {
   }
 
   isAlive() {
-    return this.isConnected;
+    return !!this.db;
   }
 
   async nbUsers() {
