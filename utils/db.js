@@ -13,6 +13,7 @@ class DBClient {
     this._host = process.env.DB_HOST || 'localhost';
     this._port = process.env.DB_PORT || 27017;
     this._uri = `mongodb://${this._host}:${this._port}`;
+    this.db = null;
     this._databaseName = process.env.DB_DATABASE || 'files_manager';
     this.isConnected = false;
     MongoClient.connect(this._uri, {
