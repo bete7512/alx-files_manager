@@ -21,8 +21,8 @@ class DBClient {
     })
       .then((client) => {
         this.db = client.db(this._databaseName);
-        this.db.createCollection('users');
-        this.db.createCollection('files');
+        if (!this.db.collection('users')) this.db.createCollection('users');
+        if (!this.db.collection('files')) this.db.createCollection('files');
         this.isConnected = true;
       })
       .catch((error) => {
