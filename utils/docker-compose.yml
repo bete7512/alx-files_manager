@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  redis:
+   image: redis:latest
+   restart: always
+   ports:
+     - 6379:6379
+   volumes:
+      - redis_data:/data/redis
+   environment:
+    - ALLOW_EMPTY_PASSWORD=yes
+volumes:
+  redis_data:
+  
