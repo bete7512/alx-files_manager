@@ -3,7 +3,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import shal from 'sha1';
+import { ObjectId } from 'mongodb';
 import dbClient from '../utils/db.js';
+import redisClient from '../utils/redis.js';
 
 const UsersController = {
   async postNew(req, res) {
@@ -22,7 +24,7 @@ const UsersController = {
         email,
         password: hashedPassword,
       });
-
+      console.log(user);
       //   console.log(user);
       //   console.log(user.ops[0]._id, user.ops[0].email);
       return res.status(201).json({

@@ -1,5 +1,4 @@
-/* eslint-disable import/extensions */
-import dbClient from './utils/db.js';
+import dbClient from './utils/db';
 
 const waitConnection = () => new Promise((resolve, reject) => {
   let i = 0;
