@@ -1,16 +1,12 @@
 import express from 'express';
+import startServer from './libs/boot';
+import injectRoutes from './routes';
+import injectMiddlewares from './libs/middlewares';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import dotenv from 'dotenv';
-// eslint-disable-next-line import/extensions
-import router from './routes/index.js';
+const server = express();
 
-dotenv.config();
+injectMiddlewares(server);
+injectRoutes(server);
+startServer(server);
 
-const app = express();
-app.use(express.json());
-app.use('/', router);
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening on port ${process.env.PORT}`);
-});
+export default server;
