@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { promisify } from 'util';
 import { createClient } from 'redis';
-=======
-import redis from 'redis';
-import { promisify } from 'util';
->>>>>>> ca34051d747aa3c34f05dc738f7c54d47eac4855
 
 /**
  * Represents a Redis client.
@@ -14,7 +9,6 @@ class RedisClient {
    * Creates a new RedisClient instance.
    */
   constructor() {
-<<<<<<< HEAD
     this.client = createClient();
     this.isClientConnected = true;
     this.client.on('error', (err) => {
@@ -24,11 +18,6 @@ class RedisClient {
     this.client.on('connect', () => {
       this.isClientConnected = true;
     });
-=======
-    this.client = redis.createClient();
-    this.get = promisify(this.client.get).bind(this.client);
-    this.isConnected = false;
->>>>>>> ca34051d747aa3c34f05dc738f7c54d47eac4855
   }
 
   /**
@@ -36,7 +25,6 @@ class RedisClient {
    * @returns {boolean}
    */
   isAlive() {
-<<<<<<< HEAD
     return this.isClientConnected;
   }
 
@@ -69,21 +57,6 @@ class RedisClient {
   async del(key) {
     await promisify(this.client.DEL).bind(this.client)(key);
   }
-=======
-    if (this.client.on('connect', () => true)) return true;
-    return false;
-  }
-
-  async get(key) {
-    return this.get(key, (err, reply) => reply);
-  }
-
-  async set(key, value, duration) {
-    return this.client.set(key, value, 'EX', duration);
-  }
-
-  async del(key) { return this.client.del(key); }
->>>>>>> ca34051d747aa3c34f05dc738f7c54d47eac4855
 }
 
 export const redisClient = new RedisClient();
