@@ -195,7 +195,6 @@ bob@dylan:~$
 -   GitHub repository:  `alx-files_manager`
 -   File:  `utils/db.js`
 
-Done?  Help  Check your code  Get a sandbox
 
 ### 2. First API
 
@@ -239,13 +238,6 @@ bob@dylan:~$
 
 ```
 
-**Repo:**
-
--   GitHub repository:  `alx-files_manager`
--   File:  `server.js, routes/index.js, controllers/AppController.js`
-
-Done?  Help  Check your code  Get a sandbox
-
 ### 3. Create a new user
 
 mandatory
@@ -286,13 +278,6 @@ bob@dylan:~$ curl 0.0.0.0:5000/users -XPOST -H "Content-Type: application/json" 
 bob@dylan:~$ 
 
 ```
-
-**Repo:**
-
--   GitHub repository:  `alx-files_manager`
--   File:  `utils/, routes/index.js, controllers/UsersController.js`
-
-Done?  Help  Check your code  Get a sandbox
 
 ### 4. Authenticate a user
 
@@ -349,12 +334,6 @@ bob@dylan:~$
 
 ```
 
-**Repo:**
-
--   GitHub repository:  `alx-files_manager`
--   File:  `utils/, routes/index.js, controllers/UsersController.js, controllers/AuthController.js`
-
-Done?  Help  Check your code  Get a sandbox
 
 ### 5. First file
 
@@ -448,12 +427,6 @@ bob@dylan:~$
 
 ```
 
-**Repo:**
-
--   GitHub repository:  `alx-files_manager`
--   File:  `utils/, routes/index.js, controllers/FilesController.js`
-
-Done?  Help  Check your code  Get a sandbox
 
 ### 6. Get and list file
 
@@ -502,12 +475,6 @@ bob@dylan:~$
 
 ```
 
-**Repo:**
-
--   GitHub repository:  `alx-files_manager`
--   File:  `utils/, routes/index.js, controllers/FilesController.js`
-
-Done?  Help  Check your code  Get a sandbox
 
 ### 7. File publish/unpublish
 
@@ -559,7 +526,6 @@ bob@dylan:~$
 -   GitHub repository:  `alx-files_manager`
 -   File:  `utils/, routes/index.js, controllers/FilesController.js`
 
-Done?  Help  Check your code  Get a sandbox
 
 ### 8. File data
 
@@ -609,7 +575,6 @@ bob@dylan:~$
 -   GitHub repository:  `alx-files_manager`
 -   File:  `utils/, routes/index.js, controllers/FilesController.js`
 
-Done?  Help  Check your code
 
 ### 9. Image Thumbnails
 
@@ -671,7 +636,6 @@ bob@dylan:~$
 -   GitHub repository:  `alx-files_manager`
 -   File:  `utils/, controllers/FilesController.js, worker.js`
 
-Done?  Help
 
 ### 10. Tests!
 
@@ -701,7 +665,6 @@ Create tests for each endpoints:
 -   GitHub repository:  `alx-files_manager`
 -   File:  `tests/`
 
-Done?  Help
 
 ### 11. New user - welcome email
 
@@ -727,6 +690,4 @@ In real life, you can use a third party service like  [Mailgun](https://intranet
 -   GitHub repository:  `alx-files_manager`
 -   File:  `utils/, worker.js, controllers/UsersController.js`
 
-Done?  Help
 
-Ready for a  manual review
